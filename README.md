@@ -1,2 +1,2 @@
 # Mor' Crosshairs
-Adds the option to customize the survivors' crosshairs.
+Makes it so you can customize the survivors' crosshairs.
