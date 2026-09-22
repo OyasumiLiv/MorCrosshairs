@@ -9,14 +9,14 @@
         <Copyright>MIT</Copyright>
         <PackageTags>QoL, Tweaks</PackageTags>
         <Authors>OyasumiLiv</Authors>
-        <PackageProjectUrl>https://github.com/OyasumiLiv/MorCrosshairs</PackageProjectUrl>
+        <PackageProjectUrl>https://thunderstore.io/c/riskofrain2/p/OyasumiLiv/MorCrosshairs/</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/OyasumiLiv/MorCrosshairs/blob/master/LICENSE.md</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/OyasumiLiv/MorCrosshairs</RepositoryUrl>
         <RepositoryType>Open Source</RepositoryType>
         <Company>OyasumiLiv</Company>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
+        <AssemblyVersion>$(Version)</AssemblyVersion>
+        <FileVersion>$(Version)</FileVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 

@@ -20,7 +20,7 @@ namespace MorCrosshairs
     [BepInPlugin(
         "OyasumiLiv.MorCrosshairs",
         "Mor' Crosshairs",
-        "1.0.0"
+        "1.0.1"
     )]
     [NetworkCompatibility(CompatibilityLevel.NoNeedForSync,VersionStrictness.DifferentModVersionsAreOk)]
     [BepInDependency("com.bepis.r2api")]
