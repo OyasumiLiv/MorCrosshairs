@@ -11,5 +11,8 @@ Any issues may be inquired at the GitHub repository's [issues page](https://gith
 #### Made by **[OyasumiLiv](https://github.com/OyasumiLiv)**.
 
 ## Changelog
+### Version 1.0.1 (21-09-2026)
+* Typo fixes.
+
 ### Version 1.0.0 (21-09-2026)
 * Initial release.
