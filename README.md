@@ -1,4 +1,4 @@
-# [Mor's Crosshairs](https://github.com/OyasumiLiv/MorCrosshairs)
+# [Mor' Crosshairs](https://github.com/OyasumiLiv/MorCrosshairs)
 ![Mod Banner](https://files.catbox.moe/bcvgvt.png)
 ## Overview
 Allows you to customize the survivors' crosshairs. Currently supports color and scale modifications — to a maximum of three times the size.
