@@ -1,77 +1,76 @@
 ﻿using BepInEx;
-using BepInEx.Logging;
 using BepInEx.Configuration;
+using BepInEx.Logging;
+
+
+using MorCrosshairs.Assets;
+using MorCrosshairs.Events;
+using MorCrosshairs.Utils;
 
 using R2API.Utils;
 
+using RoR2;
 using RoR2.UI;
 
 using UnityEngine;
-using UnityEngine.UI;
-
-using RiskOfOptions;
-using RiskOfOptions.Options;
-using RoR2;
 
 namespace MorCrosshairs
-{
+{   
+    
     [BepInPlugin(
-        "Liv.MorCrosshairs",
-        "MorCrosshairs",
+        "OyasumiLiv.MorCrosshairs",
+        "Mor' Crosshairs",
         "1.0.0"
     )]
-    [NetworkCompatibility(
-        CompatibilityLevel.NoNeedForSync,
-        VersionStrictness.DifferentModVersionsAreOk
-    )]
-
+    [NetworkCompatibility(CompatibilityLevel.NoNeedForSync,VersionStrictness.DifferentModVersionsAreOk)]
     [BepInDependency("com.bepis.r2api")]
     [BepInDependency("com.rune580.riskofoptions")] // Risk of Options
     public class Main : BaseUnityPlugin
     {
-        private ManualLogSource logger;
+        public static ManualLogSource logger;
+        private static ConfigEntry<Color> crosshairColor;
+        private static ConfigEntry<float> crosshairScale;
 
-        private static ConfigEntry<Color> CrosshairColor;
         private void Awake()
         {
             logger = Logger;
+
+            crosshairColor = Config.Bind(
+                McConfig.Crosshair.General,
+                McConfig.Crosshair.Colour.key = "Color",
+                McConfig.Crosshair.Colour.color = Color.white,
+                McConfig.Crosshair.Colour.description = "Sets the crosshair color."
+            );
+            
+            crosshairScale = Config.Bind(
+                McConfig.Crosshair.General,
+                McConfig.Crosshair.Scale.key = "Scale",
+                McConfig.Crosshair.Scale.thickness = 1.0f,
+                McConfig.Crosshair.Scale.description = "Sets the crosshair size, multiplied relative to the original crosshair scale."
+            );
+
+            On.RoR2.UI.CrosshairManager.UpdateCrosshair += CrosshairManagerOnUpdateCrosshair;
+            
             Init(logger);
-
-            On.RoR2.UI.CrosshairManager.UpdateCrosshair += CrosshairManager_UpdateCrosshair;
         }
 
-        private void CrosshairManager_UpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, CrosshairManager self, CharacterBody targetBody, Vector3 crosshairWorldPosition, Camera uiCamera)
+        private void CrosshairManagerOnUpdateCrosshair(On.RoR2.UI.CrosshairManager.orig_UpdateCrosshair orig, CrosshairManager self, CharacterBody targetBody, Vector3 crosshairWorldPosition, Camera uiCamera)
         {
-            logger.LogDebug("Initializing On.RoR2.UI.CrosshairManager.UpdateCrosshair : CrosshairManager_UpdateCrosshair.");
-            
-            orig(self, targetBody, crosshairWorldPosition, uiCamera);
-            
-            if (self.crosshairController == null) return;
-
-            Graphic[] crosshairInstance = self.crosshairController.GetComponentsInChildren<Graphic>(true);
-
-            foreach(Graphic element in crosshairInstance)
-            {
-                logger.LogInfo($"Setting {element} color.");
-                element.color = CrosshairColor.Value;
-            }
-
+            McUpdateCrosshair updateCrosshair = new McUpdateCrosshair();
+            updateCrosshair.CrosshairManager_UpdateCrosshair(orig, self, targetBody, crosshairWorldPosition, uiCamera,
+                crosshairColor.Value, crosshairScale.Value);
         }
-        public void Init(ManualLogSource console)
+
+        private void Init(ManualLogSource console)
         {
             console.LogInfo("Initializing setup!");
-
-            RiskOfOptions_Setup();
-        }
-
-        private void RiskOfOptions_Setup()
-        {
-            ModSettingsManager.AddOption(new ColorOption(CrosshairColor = Config.Bind(
-                "Crosshair Settings",
-                "Color",
-                Color.white,
-                "Sets the crosshair color.")
-            ));
+            
+            McConfig.RiskOfOptions_Get("Allows you to customize the survivors' crosshairs.", BuildAssets.GetIcon());
+            
+            McConfig.RiskOfOptions_Get(crosshairColor, logger);
+            
+            McConfig.RiskOfOptions_Get(crosshairScale, logger);
         }
     }
 }
+

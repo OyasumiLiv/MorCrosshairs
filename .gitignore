@@ -1,4 +1,8 @@
 /MorCrosshairs/bin/
 /MorCrosshairs/obj/
+/MorCrosshairs/Resources/
+/MorCrosshairs/Build/
+/Characters Crosshairs/
+/**.user
 /.git/
 /.idea/
